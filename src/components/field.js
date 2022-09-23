@@ -17,8 +17,8 @@ class Field {
 	}
 
 	createField() {
-		this.field = new Array(this.width)
-			.fill(new Array(this.height).fill(null));
+		this.field = new Array(this.height)
+			.fill(new Array(this.width).fill(null));
 	}
 
 	validateMinesCount() {
