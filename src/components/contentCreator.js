@@ -2,7 +2,12 @@ const {createArrayWithRandomNumbers} = require('../utils/randomGenerator');
 
 class contentCreator {
 	fillFieldByContent(field) {
+		field.updateField(this.initField(field));
 		field.updateField(this.getFieldWithMines(field));
+	}
+
+	initField(field) {
+		return field.getField().map(() => ({isMine: false, value: 0}));
 	}
 
 	getFieldWithMines(field) {
@@ -28,13 +33,10 @@ class contentCreator {
 			i < rowWithMines.length;
 			row++
 		) {
-			fieldWithMines[row] = clonedField.map(() => {
-				const cell = {
-					isMine: rowWithMines[i],
-					value: null,
-				};
+			fieldWithMines[row] = clonedField.map(clonedCell => {
+				clonedCell.isMine = rowWithMines[i];
 				i++;
-				return cell;
+				return clonedCell;
 			});
 		}
 
