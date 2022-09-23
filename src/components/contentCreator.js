@@ -2,14 +2,10 @@ const {createArrayWithRandomNumbers} = require('../utils/randomGenerator');
 
 class contentCreator {
 	fillFieldByContent(field) {
-		field.updateField(this.fillFieldByMines(field));
+		field.updateField(this.getFieldWithMines(field));
 	}
 
-	fillFieldByMines(field) {
-		return this.getFieldWithMinesPositions(field);
-	}
-
-	getFieldWithMinesPositions(field) {
+	getFieldWithMines(field) {
 		const filedCellsRowWithMines = this.getMinesPositionsInRow(field);
 		return this.formatRowAsField(filedCellsRowWithMines, field);
 	}
@@ -28,16 +24,16 @@ class contentCreator {
 		const clonedField = field.getField();
 
 		for (
-			let count = 0, i = 0;
-			count < rowWithMines.length;
-			i++
+			let i = 0, row = 0;
+			i < rowWithMines.length;
+			row++
 		) {
-			fieldWithMines[i] = clonedField.map(() => {
+			fieldWithMines[row] = clonedField.map(() => {
 				const cell = {
-					isMine: rowWithMines[count],
+					isMine: rowWithMines[i],
 					value: null,
 				};
-				count++;
+				i++;
 				return cell;
 			});
 		}
