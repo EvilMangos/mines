@@ -1,7 +1,7 @@
 const Redis = require('./redis');
 const ContentCreator = require('./contentCreator');
 
-const defaultMinesPercentage = 0.05;
+const defaultMinesPercentage = 0.2;
 
 class Field {
 	redisService = new Redis();
