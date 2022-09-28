@@ -5,4 +5,8 @@ module.exports = {
 	height: Joi.number().required().min(3),
 	minesCount: Joi.number().min(0),
 	field: Joi.array().items({isMine: Joi.boolean().required(), value: Joi.number().required()}),
+	cell: Joi.object({
+		isMine: Joi.boolean().required(),
+		value: Joi.number().required(),
+	}),
 };

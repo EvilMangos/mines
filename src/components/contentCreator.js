@@ -1,4 +1,4 @@
-const {createArrayWithRandomNumbers, getAdditions} = require('../utils/utils');
+const {createArrayWithRandomNumbers, getAdditions, isCoordinateInRange} = require('../utils/utils');
 
 class contentCreator {
 	fillFieldByContent(field) {
@@ -67,20 +67,14 @@ class contentCreator {
 			const newRow = row + addition.h;
 
 			if (
-				this.isCoordinatesInRange({field, row: newRow, column: newColumn})
+				isCoordinateInRange({field, row: newRow, column: newColumn})
+				&& !field[newRow][newColumn].isMine
 			) {
-				if (!field[newRow][newColumn].isMine) {
-					field[newRow][newColumn].value++;
-				}
+				field[newRow][newColumn].value++;
 			}
 		});
 	}
 
-	isCoordinatesInRange({field, row, column}) {
-		const fieldWidthLimit = field.length;
-		const fieldHeightLimit = field[0].length;
-		return row >= 0 && row < fieldWidthLimit && column >= 0 && column < fieldHeightLimit;
-	}
 }
 
 module.exports = contentCreator;

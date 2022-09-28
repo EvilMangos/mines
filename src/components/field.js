@@ -5,7 +5,7 @@ const {fieldInputData} = require('../schemes/components/field');
 const defaultMinesPercentage = 0.2;
 
 class Field {
-	redisService = new Redis();
+	redis = new Redis();
 	contentCreator = new ContentCreator();
 
 	constructor({width, height, minesCount}) {
