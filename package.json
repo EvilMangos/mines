@@ -4,7 +4,8 @@
   "description": "Mines game",
   "main": "src/index.js",
   "scripts": {
-    "dev": "nodemon src/index.js"
+    "dev": "nodemon src/index.js",
+    "unit-tests": "jest --detectOpenHandles --config jest-unit-tests.json"
   },
   "repository": {
     "type": "git",

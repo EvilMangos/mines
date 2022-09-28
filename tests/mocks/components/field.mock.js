@@ -3,6 +3,7 @@ class FieldMock {
 		this.width = width;
 		this.height = height;
 		this.minesCount = minesCount;
+		this.createField();
 	}
 
 	createField() {
