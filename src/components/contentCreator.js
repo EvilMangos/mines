@@ -1,35 +1,39 @@
 const {createArrayWithRandomNumbers, getAdditions, isCoordinateInRange} = require('../utils/utils');
 
 class contentCreator {
-	fillFieldByContent(field) {
-		field.updateField(this.initField(field));
-		field.updateField(this.getFieldWithMines(field));
-		field.updateField(this.fillFieldByNumbers(field));
+	constructor(playArea) {
+		this.playArea = playArea;
 	}
 
-	initField(field) {
-		return field.getField().map(
+	createContent() {
+		this.playArea.updateField(this.initField());
+		this.playArea.updateField(this.createMines());
+		this.playArea.updateField(this.fillFieldByNumbers());
+	}
+
+	initField() {
+		return this.playArea.getField().map(
 			row => row.map(() => ({isMine: false, value: 0})),
 		);
 	}
 
-	getFieldWithMines(field) {
-		const cellsRowWithMines = this.getMinesPositionsInRow(field);
-		return this.formatRowAsField(cellsRowWithMines, field);
+	createMines() {
+		const cellsRowWithMines = this.getMinesPositionsInRow();
+		return this.formatRowAsField(cellsRowWithMines);
 	}
 
-	getMinesPositionsInRow(field) {
-		const fieldCellsCount = field.getWidth() * field.getHeight();
+	getMinesPositionsInRow() {
+		const fieldCellsCount = this.playArea.getWidth() * this.playArea.getHeight();
 		const fieldCellsInRow = createArrayWithRandomNumbers(fieldCellsCount);
 
 		const sortedFieldCellsRow = new Array(...fieldCellsInRow).sort((a, b) => b - a);
-		const mines = sortedFieldCellsRow.slice(0, field.getMinesCount());
+		const mines = sortedFieldCellsRow.slice(0, this.playArea.getMinesCount());
 		return fieldCellsInRow.map(value => mines.includes(value));
 	}
 
-	formatRowAsField(rowWithMines, field) {
+	formatRowAsField(rowWithMines) {
 		const fieldWithMines = [];
-		const clonedField = field.getField();
+		const clonedField = this.playArea.getField();
 
 		for (
 			let i = 0, row = 0;
@@ -46,11 +50,11 @@ class contentCreator {
 		return fieldWithMines;
 	}
 
-	fillFieldByNumbers(field) {
-		const clonedField = field.getField();
+	fillFieldByNumbers() {
+		const clonedField = this.playArea.getField();
 
-		for (let i = 0; i < field.getHeight(); i++) {
-			for (let j = 0; j < field.getWidth(); j++) {
+		for (let i = 0; i < this.playArea.getHeight(); i++) {
+			for (let j = 0; j < this.playArea.getWidth(); j++) {
 				if (clonedField[i][j].isMine) {
 					this.increaseCellsAround({field: clonedField, row: i, column: j});
 				}
@@ -74,7 +78,6 @@ class contentCreator {
 			}
 		});
 	}
-
 }
 
 module.exports = contentCreator;

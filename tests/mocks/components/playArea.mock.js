@@ -1,13 +1,13 @@
-class FieldMock {
+class PlayAreaMock {
 	constructor({width, height, minesCount}) {
 		this.width = width;
 		this.height = height;
 		this.minesCount = minesCount;
-		this.createField();
+		this.field = this.createField();
 	}
 
 	createField() {
-		this.field = new Array(this.height)
+		return new Array(this.height)
 			.fill(new Array(this.width).fill(null));
 	}
 
@@ -32,4 +32,4 @@ class FieldMock {
 	}
 }
 
-module.exports = FieldMock;
+module.exports = PlayAreaMock;

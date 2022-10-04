@@ -1,17 +1,19 @@
 const ContentCreator = require('../../../src/components/contentCreator');
-const FieldMock = require('../../mocks/components/field.mock');
+const PlayAreaMock = require('../../mocks/components/playArea.mock');
+
 const {isValidDataSchema, checkNumbersInField} = require('../../utils');
 const contentCreatorSchemas = require('../../schemes/contentCreator.scheme');
 
 describe('contentCreator', () => {
-	const contentCreator = new ContentCreator();
 	it.concurrent('contentCreator initField success', () => {
 		const width = 5;
 		const height = 8;
 		const minesCount = 8;
 
-		const field = new FieldMock({width, height, minesCount});
-		const initField = contentCreator.initField(field);
+		const playArea = new PlayAreaMock({width, height, minesCount});
+		const contentCreator = new ContentCreator(playArea);
+
+		const initField = contentCreator.initField();
 
 		expect(initField.length).toBe(height);
 		expect(initField[0].length).toBe(width);
@@ -23,8 +25,10 @@ describe('contentCreator', () => {
 		const height = 8;
 		const minesCount = 8;
 
-		const field = new FieldMock({width, height, minesCount});
-		const rowWithMines = contentCreator.getMinesPositionsInRow(field);
+		const playArea = new PlayAreaMock({width, height, minesCount});
+		const contentCreator = new ContentCreator(playArea);
+
+		const rowWithMines = contentCreator.getMinesPositionsInRow();
 
 		const resMinesCount = rowWithMines.filter(element => element).length;
 
@@ -38,9 +42,11 @@ describe('contentCreator', () => {
 		const height = 8;
 		const minesCount = 8;
 
-		const field = new FieldMock({width, height, minesCount});
-		field.updateField(contentCreator.initField(field));
-		const fieldWithMines = contentCreator.getFieldWithMines(field);
+		const playArea = new PlayAreaMock({width, height, minesCount});
+		const contentCreator = new ContentCreator(playArea);
+
+		playArea.updateField(contentCreator.initField());
+		const fieldWithMines = contentCreator.createMines();
 
 		expect(fieldWithMines.length).toBe(height);
 		expect(fieldWithMines[0].length).toBe(width);
@@ -52,12 +58,13 @@ describe('contentCreator', () => {
 		const height = 8;
 		const minesCount = 8;
 
-		const field = new FieldMock({width, height, minesCount});
+		const playArea = new PlayAreaMock({width, height, minesCount});
+		const contentCreator = new ContentCreator(playArea);
 
-		field.updateField(contentCreator.initField(field));
-		field.updateField(contentCreator.getFieldWithMines(field));
+		playArea.updateField(contentCreator.initField());
+		playArea.updateField(contentCreator.createMines());
 
-		const resultField = contentCreator.fillFieldByNumbers(field);
+		const resultField = contentCreator.fillFieldByNumbers();
 
 		expect(resultField.length).toBe(height);
 		expect(resultField[0].length).toBe(width);

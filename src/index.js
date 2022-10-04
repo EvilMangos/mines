@@ -4,4 +4,4 @@ const Game = require('./components/game');
 
 const game = new Game();
 
-game.startGame({width: 3, height: 4, minesCount: 3});
+game.startGame({width: 4, height: 4, minesCount: 4});
