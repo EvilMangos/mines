@@ -1,8 +1,8 @@
-const Field = require('./field');
+const PlayArea = require('./playArea');
 
 class Game {
 	startGame({width, height, minesCount}) {
-		this.field = new Field({width, height, minesCount});
+		this.playArea = new PlayArea({width, height, minesCount});
 	}
 }
 

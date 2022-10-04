@@ -4,17 +4,19 @@ const {fieldInputData} = require('../schemes/components/field');
 
 const defaultMinesPercentage = 0.2;
 
-class Field {
+class PlayArea {
 	redis = new Redis();
-	contentCreator = new ContentCreator();
+	contentCreator = new ContentCreator(this);
 
 	constructor({width, height, minesCount}) {
 		this.validateInputData({width, height, minesCount});
+
 		this.width = width;
 		this.height = height;
 		this.minesCount = minesCount;
-		this.createField();
-		this.contentCreator.fillFieldByContent(this);
+
+		this.field = this.createField();
+		this.contentCreator.createContent();
 	}
 
 	validateInputData({width, height, minesCount}) {
@@ -46,7 +48,7 @@ class Field {
 	}
 
 	createField() {
-		this.field = new Array(this.height)
+		return new Array(this.height)
 			.fill(new Array(this.width).fill(null));
 	}
 
@@ -75,4 +77,4 @@ class Field {
 	}
 }
 
-module.exports = Field;
+module.exports = PlayArea;
