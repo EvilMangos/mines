@@ -9,6 +9,7 @@ module.exports = {
 				Joi.object({
 					isMine: false,
 					value: 0,
+					isOpen: false,
 				}),
 			),
 		),
