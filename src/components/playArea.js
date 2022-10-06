@@ -40,10 +40,6 @@ class PlayArea {
 		return this.minesCount;
 	}
 
-	setMinesCount(minesCount) {
-		this.minesCount = minesCount;
-	}
-
 	updateField(field) {
 		this.field = field;
 	}

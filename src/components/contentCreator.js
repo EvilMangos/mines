@@ -13,7 +13,7 @@ class contentCreator {
 
 	initField() {
 		return this.playArea.getField().map(
-			row => row.map(() => ({isMine: false, value: 0})),
+			row => row.map(() => ({isMine: false, value: 0, isOpen: false})),
 		);
 	}
 

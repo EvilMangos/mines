@@ -8,5 +8,6 @@ module.exports = {
 	cell: Joi.object({
 		isMine: Joi.boolean().required(),
 		value: Joi.number().required(),
+		isOpen: Joi.boolean().required(),
 	}),
 };
