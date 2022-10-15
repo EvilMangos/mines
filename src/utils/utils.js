@@ -15,6 +15,7 @@ const getAdditions = () => [
 	{w: 1, h: -1},
 ];
 
+
 const isCoordinateInRange = ({field, row, column}) => {
 	const fieldWidthLimit = field.length;
 	const fieldHeightLimit = field[0].length;
@@ -24,5 +25,5 @@ const isCoordinateInRange = ({field, row, column}) => {
 module.exports = {
 	createArrayWithRandomNumbers,
 	getAdditions,
-	isCoordinateInRange
+	isCoordinateInRange,
 };

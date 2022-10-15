@@ -2,6 +2,8 @@ const RedisService = require('../services/redis.service');
 const ValidateService = require('../services/validate.service');
 const ContentCreator = require('./contentCreator');
 
+const {getAdditions, isCoordinateInRange} = require('../utils/utils');
+
 class PlayArea {
 	redisService = new RedisService();
 	validateService = new ValidateService();
@@ -22,6 +24,39 @@ class PlayArea {
 	createField() {
 		return new Array(this.height)
 			.fill(new Array(this.width).fill(null));
+	}
+
+	getCell({row, column}) {
+		return this.field[row][column];
+	}
+
+	openArea({row, column}) {
+		const cell = this.getCell({row, column});
+		this.openCell({row, column});
+
+		if (cell.value === 0) {
+			getAdditions().forEach(addition => {
+				const newRow = row + addition.h;
+				const newColumn = column + addition.w;
+
+				if (this.isCellValidForOpening({row: newRow, column: newColumn})) {
+					this.openArea({row: newRow, column: newColumn});
+				}
+			});
+		}
+	}
+
+	openCell({row, column}) {
+		this.field[row][column].isOpen = true;
+	}
+
+	isCellValidForOpening({row, column}) {
+		if (isCoordinateInRange({field: this.field, row, column})) {
+			const cell = this.getCell({row, column});
+			return !cell.isMine && !cell.isOpen;
+		}
+
+		return false;
 	}
 
 	getHeight() {
